@@ -26,9 +26,3 @@
 
   exports.requestAPI = requestAPI;
 })(this);
-
-// var myAPI;
-//
-// this.requestAPI(function(response) {
-//   myAPI = response;
-// });
