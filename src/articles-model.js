@@ -1,3 +1,3 @@
 function Articles() {
-  this.articles = [];
-} 
+  this.items = [];
+}
