@@ -1,0 +1,3 @@
+function Articles() {
+  this.articles = [];
+} 
