@@ -53,6 +53,24 @@ function articlesAddsArticleObjects() {
   assert.isTrue(articles.items.length > 0);
 }
 
+function articlesItemsHaveHeading() {
+  requestAPI = function(fn) {
+    fn(guardianAPISample);
+  };
+  articles.getArticles(Article, requestAPI);
+  assert.isTrue(articles.items[0].heading == "F1: Brazilian Grand Prix – live!");
+}
+
+function articlesItemsHaveURL() {
+  requestAPI = function(fn) {
+    fn(guardianAPISample);
+  };
+  articles.getArticles(Article, requestAPI);
+  assert.isTrue(articles.items[0].apiURL == "https://content.guardianapis.com/sport/live/2016/nov/13/f1-brazilian-grand-prix-live");
+}
+
 articlesItemsAreEmpty();
 articlesMakesCallToAPI();
 articlesAddsArticleObjects();
+articlesItemsHaveHeading();
+articlesItemsHaveURL();
