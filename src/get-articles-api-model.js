@@ -14,13 +14,13 @@
 
   function returnResult (httpRequest) {
     if (httpRequest.status === 200) {
-      return pushToItemsArray(httpRequest.responseText);
+      return getJSONFormat(httpRequest.responseText);
     } else {
       return httpRequest.status;
     }
   }
 
-  function pushToItemsArray (response) {
+  function getJSONFormat (response) {
     return JSON.parse(response);
   }
 
