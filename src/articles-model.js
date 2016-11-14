@@ -1,22 +1,24 @@
 (function(exports) {
-  var items = [];
-
-  function Articles() {
-    this.items = items;
+  function Articles(Article) {
+    this.items = [];
+    this.article = Article;
   }
 
-  Articles.prototype.getArticles = function (article, requestAPI) {
+  Articles.prototype.getArticles = function (requestAPI) {
+    var article = this.article;
+    var _this = this;
     requestAPI(function(response) {
-      createArticles(article, response);
+      _this._createArticles(response);
     });
   };
 
-  function createArticles(article, responseObject) {
-    responseObject.response.results.forEach(function (value) {
-      var formattedArticle = new article(value.webTitle, value.apiUrl, null);
-      items.push(formattedArticle);
+  Articles.prototype._createArticles = function (responseObject) {
+    var _this = this;
+    responseObject.response.results.forEach(function(value) {
+      var formattedArticle = new _this.article(value.webTitle, value.apiUrl, null);
+      _this.items.push(formattedArticle);
     });
-  }
+  };
 
   exports.Articles = Articles;
 })(this);
