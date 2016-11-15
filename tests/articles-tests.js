@@ -1,4 +1,4 @@
-articles = new Articles();
+articles = new Articles(Article);
 
 var guardianAPISample = {
   "response":{
@@ -42,24 +42,24 @@ function articlesItemsAreEmpty() {
 
 function articlesMakesCallToAPI() {
   requestAPI = spy.on;
-  assert.makesCall([articles.getArticles, [Article, requestAPI]], requestAPI);
+  assert.makesCall([articles.getArticles, [requestAPI]], requestAPI);
 }
 
 function articlesAddsArticleObjects() {
   requestAPI = spy.onAndReturn(function(fn) {fn(guardianAPISample);});
-  articles.getArticles(Article, requestAPI);
+  articles.getArticles(requestAPI);
   assert.isTrue(articles.items.length > 0);
 }
 
 function articlesItemsHaveHeading() {
   requestAPI = spy.onAndReturn(function(fn) {fn(guardianAPISample);});
-  articles.getArticles(Article, requestAPI);
+  articles.getArticles(requestAPI);
   assert.isTrue(articles.items[0].heading == "F1: Brazilian Grand Prix – live!");
 }
 
 function articlesItemsHaveURL() {
   requestAPI = spy.onAndReturn(function(fn) {fn(guardianAPISample);});
-  articles.getArticles(Article, requestAPI);
+  articles.getArticles(requestAPI);
   assert.isTrue(articles.items[0].apiURL == "https://content.guardianapis.com/sport/live/2016/nov/13/f1-brazilian-grand-prix-live");
 }
 
