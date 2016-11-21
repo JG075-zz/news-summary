@@ -1,5 +1,7 @@
 var articles = new Articles(Article, APICaller);
 
+var functions = [articlesItemsAreEmpty, articlesMakesCallToAPI, articlesAddsArticleObjects, articlesItemsHaveHeading, articlesItemsHaveURL];
+
 var guardianAPISample = {
   "response":{
     "status":"ok",
@@ -36,36 +38,36 @@ var guardianAPISample = {
   }
 };
 
+function beforeEach() {
+  var articles = new Articles(Article, APICaller);
+  articles.apiCaller.requestAPI = spy.onAndReturn(function(fn) {fn(guardianAPISample);});
+}
+
 function articlesItemsAreEmpty() {
   assert.isTrue(articles.items.length === 0);
 }
 
 function articlesMakesCallToAPI() {
-  var articles2 = new Articles(Article, APICaller);
-  articles2.apiCaller.requestAPI = spy.on;
-  assert.makesCall([articles2, "getArticles"], [articles2, "apiCaller", "requestAPI"]);
+  articles.apiCaller.requestAPI = spy.on;
+  assert.makesCall([articles, "getArticles"], [articles, "apiCaller", "requestAPI"]);
 }
 
 function articlesAddsArticleObjects() {
-  requestAPI = spy.onAndReturn(function(fn) {fn(guardianAPISample);});
   articles.getArticles();
   assert.isTrue(articles.items.length > 0);
 }
 
 function articlesItemsHaveHeading() {
-  requestAPI = spy.onAndReturn(function(fn) {fn(guardianAPISample);});
   articles.getArticles();
   assert.isTrue(articles.items[0].heading == "F1: Brazilian Grand Prix – live!");
 }
 
 function articlesItemsHaveURL() {
-  requestAPI = spy.onAndReturn(function(fn) {fn(guardianAPISample);});
   articles.getArticles();
   assert.isTrue(articles.items[0].apiURL == "https://content.guardianapis.com/sport/live/2016/nov/13/f1-brazilian-grand-prix-live");
 }
 
-articlesItemsAreEmpty();
-articlesMakesCallToAPI();
-// articlesAddsArticleObjects();
-// articlesItemsHaveHeading();
-// articlesItemsHaveURL();
+functions.forEach(function(element) {
+    beforeEach();
+    element();
+});
