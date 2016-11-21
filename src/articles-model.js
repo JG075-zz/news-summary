@@ -1,13 +1,13 @@
 (function(exports) {
-  function Articles(Article) {
+  function Articles(article, apiCaller) {
     this.items = [];
-    this.article = Article;
+    this.article = article;
+    this.apiCaller = apiCaller;
   }
 
-  Articles.prototype.getArticles = function (requestAPI) {
-    var article = this.article;
+  Articles.prototype.getArticles = function () {
     var _this = this;
-    requestAPI(function(response) {
+    this.apiCaller.requestAPI(function(response) {
       _this._createArticles(response);
     });
   };

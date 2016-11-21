@@ -4,7 +4,7 @@
   }
 
   ArticlesView.prototype.returnHTML = function () {
-    this.articles.getArticles(requestAPI);
+    this.articles.getArticles();
     var HTMLstring;
     this.articles.items.forEach(function(value) {
       HTMLstring += value;

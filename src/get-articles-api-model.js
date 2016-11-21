@@ -1,28 +1,31 @@
 (function(exports) {
-  function requestAPI (fn) {
+  function APICaller () {
+  }
+
+  APICaller.prototype.requestAPI = function (fn) {
     var httpRequest = new XMLHttpRequest();
     httpRequest.onreadystatechange = function(){
       if (httpRequest.readyState == XMLHttpRequest.DONE) {
-        fn(returnResult(httpRequest));
+        fn(this.returnResult(httpRequest));
       } else {
         return httpRequest.readyState;
       }
     };
     httpRequest.open('GET', 'http://news-summary-api.herokuapp.com/guardian?apiRequestUrl=http://content.guardianapis.com/search', true);
     httpRequest.send(null);
-  }
+  };
 
-  function returnResult (httpRequest) {
+  APICaller.prototype.returnResult = function (httpRequest) {
     if (httpRequest.status === 200) {
-      return getJSONFormat(httpRequest.responseText);
+      return this.getJSONFormat(httpRequest.responseText);
     } else {
       return httpRequest.status;
     }
-  }
+  };
 
-  function getJSONFormat (response) {
+  APICaller.prototype.getJSONFormat = function (response) {
     return JSON.parse(response);
-  }
+  };
 
-  exports.requestAPI = requestAPI;
+  exports.APICaller = APICaller;
 })(this);

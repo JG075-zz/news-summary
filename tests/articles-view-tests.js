@@ -1,5 +1,5 @@
-var articlesView = new ArticlesView(Articles);
-var articles = new Articles(Article);
+var articles = new Articles(Article, APICaller);
+var articlesView = new ArticlesView(function(){ return Articles(Article, APICaller);});
 
 var guardianAPISample = {
   "response":{
@@ -39,9 +39,9 @@ var guardianAPISample = {
 
 function articlesViewReturnsString() {
   requestAPI = spy.onAndReturn(function(fn) {fn(guardianAPISample);});
-  articles.getArticles(requestAPI);
+  articles.getArticles();
   HTMLstring = articlesView.returnHTML();
-  // assert.isTypeOf(HTMLstring, "string");
+  assert.isTypeOf(HTMLstring, "string");
 }
 
 // articlesViewReturnsString();
