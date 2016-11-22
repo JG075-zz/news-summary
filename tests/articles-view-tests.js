@@ -1,5 +1,7 @@
 var articles = new Articles(Article, APICaller);
-var articlesView = new ArticlesView(function(){ return Articles(Article, APICaller);});
+var articlesView = new ArticlesView(articles);
+
+var functions = [articlesViewReturnsString, articlesViewReturnsHTMLString];
 
 var guardianAPISample = {
   "response":{
@@ -37,11 +39,24 @@ var guardianAPISample = {
   }
 };
 
+function beforeEach() {
+  articles = new Articles(Article, APICaller);
+  articlesView = new ArticlesView(articles);
+  articles.apiCaller.requestAPI = spy.onAndReturn(function(fn) {fn(guardianAPISample);});
+}
+
 function articlesViewReturnsString() {
-  requestAPI = spy.onAndReturn(function(fn) {fn(guardianAPISample);});
-  articles.getArticles();
   HTMLstring = articlesView.returnHTML();
   assert.isTypeOf(HTMLstring, "string");
 }
 
-// articlesViewReturnsString();
+function articlesViewReturnsHTMLString() {
+  var articlesView = new ArticlesView(articles);
+  HTMLstring = articlesView.returnHTML();
+  assert.isEqual(HTMLstring, "<li><h2>F1: Brazilian Grand Prix – live!</h2></li><li><h2>New Zealand earthquake: evacuations as tsunami heads for east coast – live</h2></li>");
+}
+
+functions.forEach(function(element) {
+    beforeEach();
+    element();
+});
