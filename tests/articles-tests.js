@@ -39,7 +39,7 @@ var guardianAPISample = {
 };
 
 function beforeEach() {
-  var articles = new Articles(Article, APICaller);
+  articles = new Articles(Article, APICaller);
   articles.apiCaller.requestAPI = spy.onAndReturn(function(fn) {fn(guardianAPISample);});
 }
 
