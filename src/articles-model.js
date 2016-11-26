@@ -1,18 +1,19 @@
 (function(exports) {
-  function Articles(article, apiCaller) {
+  function ArticlesModel(article, apiCaller) {
     this.items = [];
     this.article = article;
-    this.apiCaller = apiCaller;
+    this.apiCaller = new apiCaller();
   }
 
-  Articles.prototype.getArticles = function () {
+  ArticlesModel.prototype.getArticles = function (fn) {
     var _this = this;
     this.apiCaller.requestAPI(function(response) {
       _this._createArticles(response);
+      fn();
     });
   };
 
-  Articles.prototype._createArticles = function (responseObject) {
+  ArticlesModel.prototype._createArticles = function (responseObject) {
     var _this = this;
     responseObject.response.results.forEach(function(value) {
       var formattedArticle = new _this.article(value.webTitle, value.apiUrl, null);
@@ -20,5 +21,5 @@
     });
   };
 
-  exports.Articles = Articles;
+  exports.ArticlesModel = ArticlesModel;
 })(this);

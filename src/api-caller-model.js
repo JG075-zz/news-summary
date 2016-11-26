@@ -1,12 +1,13 @@
 (function(exports) {
-  function APICaller () {
+  function APICallerModel () {
   }
 
-  APICaller.prototype.requestAPI = function (fn) {
+  APICallerModel.prototype.requestAPI = function (fn) {
     var httpRequest = new XMLHttpRequest();
+    var _this = this;
     httpRequest.onreadystatechange = function(){
       if (httpRequest.readyState == XMLHttpRequest.DONE) {
-        fn(this.returnResult(httpRequest));
+        fn(_this.returnResult(httpRequest));
       } else {
         return httpRequest.readyState;
       }
@@ -15,7 +16,7 @@
     httpRequest.send(null);
   };
 
-  APICaller.prototype.returnResult = function (httpRequest) {
+  APICallerModel.prototype.returnResult = function (httpRequest) {
     if (httpRequest.status === 200) {
       return this.getJSONFormat(httpRequest.responseText);
     } else {
@@ -23,9 +24,9 @@
     }
   };
 
-  APICaller.prototype.getJSONFormat = function (response) {
+  APICallerModel.prototype.getJSONFormat = function (response) {
     return JSON.parse(response);
   };
 
-  exports.APICaller = APICaller;
+  exports.APICallerModel = APICallerModel;
 })(this);

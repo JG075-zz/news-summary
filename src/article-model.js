@@ -1,9 +1,9 @@
 (function(exports) {
-  function Article(heading, apiURL, bodyContent) {
+  function ArticleModel(heading, apiURL, bodyContent) {
     this.heading = heading;
     this.apiURL = apiURL;
     this.bodyContent = bodyContent;
   }
 
-  exports.Article = Article;
+  exports.ArticleModel = ArticleModel;
 })(this);
